@@ -4,12 +4,9 @@ import './App.css';
 
 import Another from './another';
 
-
 function App() {
 
   const [count,setCount]  = useState(0);
-
-  let gg = "fsfdsfg";
 
   const decrement = ()=>{
     setCount(prevCount => prevCount-1);
