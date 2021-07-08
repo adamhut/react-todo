@@ -1,4 +1,9 @@
 {
     "singleQuote": true,
-    "arrowParens": "always"
+    "arrowParens": "always",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
 }
