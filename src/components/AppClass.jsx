@@ -1,43 +1,97 @@
 import React, { Component } from 'react';
 
 export default class AppClass extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          todos: [
-            {
-              id: 1,
-              title: 'Finish React Series',
-              isComplete: true,
-            },
-            {
-              id: 2,
-              title: 'Go Grocery',
-              isComplete: false,
-            },
-            {
-              id: 3,
-              title: 'Take Over World',
-              isComplete: false,
-            },
-          ],
-        };
-    }
+  todoRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [
+        {
+          id: 1,
+          title: 'Finish React Series',
+          isComplete: true,
+        },
+        {
+          id: 2,
+          title: 'Go Grocery',
+          isComplete: false,
+        },
+        {
+          id: 3,
+          title: 'Take Over World',
+          isComplete: false,
+        },
+      ],
+      todoId: 1,
+    };
+  }
+  componentDidMount() {
+    let currentMaxId = 0;
+    this.state.todos.forEach((todo) => {
+      currentMaxId = currentMaxId < todo.id ? todo.id : currentMaxId;
+    });
+    this.setState({ todoId: currentMaxId });
+  }
 
+  addTodo = (event) => {
+    event.preventDefault();
+    console.log(this.todoRef.current.value);
+    let nextId = this.state.todoId + 1;
 
+    const todo = {
+      id: nextId,
+      title: this.todoRef.current.value,
+      isComplete: false,
+    };
 
+    this.setState({ todos: [...this.state.todos, todo] });
+
+    this.setState({ todoId: nextId });
+
+    event.currentTarget.reset();
+  };
+  changeState = (event) => {
+    let temp = [...this.state.todos];
+    temp = temp.map((todo) => {
+      //  console.log(event.target);
+      if (todo.id == event.target.value) {
+        todo.isComplete = !todo.isComplete;
+      }
+
+      return todo;
+    });
+    this.setState({ todos: temp });
+  };
+  handleDelete = (id) => {
+    console.log(id);
+    let todos = [...this.state.todos].filter((item) => item.id !== id);
+    this.setState({ todos });
+  };
+  checkAll = () => {
+    let todos = [...this.state.todos].map((item) => {
+      item.isComplete = true;
+      return item;
+    });
+    this.setState({ todos });
+  };
+  clearComplete = () => {
+    let todos = [...this.state.todos].filter(
+      (todo) => todo.isComplete === false
+    );
+    this.setState({ todos });
+  };
+  todosCount = () => {
+    return this.state.todos.filter((todo) => todo.isComplete === false).length;
+  };
   render() {
-
-
-
     return (
       <div className="todo-app-container">
         <div className="todo-app">
           <h2>Todo App</h2>
-          <form action="#" onSubmit={addTodo}>
+          <form action="#" onSubmit={this.addTodo}>
             <input
               type="text"
-              ref={todoRef}
+              ref={this.todoRef}
               className="todo-input"
               placeholder="What do you need to do?"
             />
@@ -52,7 +106,7 @@ export default class AppClass extends Component {
                       <input
                         type="checkbox"
                         id={`todo${index}`}
-                        onChange={changeState}
+                        onChange={this.changeState}
                         checked={todo.isComplete}
                         value={todo.id}
                       />
@@ -65,7 +119,10 @@ export default class AppClass extends Component {
                       </span>
                     </label>
                   </div>
-                  <button className="x-button">
+                  <button
+                    className="x-button"
+                    onClick={() => this.handleDelete(todo.id)}
+                  >
                     <svg
                       className="x-button-icon"
                       fill="none"
@@ -87,12 +144,12 @@ export default class AppClass extends Component {
 
           <div className="check-all-container">
             <div>
-              <div className="button" onClick={checkAll}>
+              <div className="button" onClick={this.checkAll}>
                 Check All
               </div>
             </div>
 
-            <span>{todosCount()} items remaining</span>
+            <span>{this.todosCount()} items remaining</span>
           </div>
 
           <div className="other-buttons-container">
@@ -104,7 +161,9 @@ export default class AppClass extends Component {
               <button className="button filter-button">Completed</button>
             </div>
             <div>
-              <button className="button">Clear completed</button>
+              <button className="button" onClick={this.clearComplete}>
+                Clear completed
+              </button>
             </div>
           </div>
         </div>
