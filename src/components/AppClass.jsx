@@ -54,7 +54,7 @@ export default class AppClass extends Component {
     let temp = [...this.state.todos];
     temp = temp.map((todo) => {
       //  console.log(event.target);
-      if (todo.id == event.target.value) {
+      if (todo.id === event.target.value) {
         todo.isComplete = !todo.isComplete;
       }
 
@@ -64,7 +64,7 @@ export default class AppClass extends Component {
   };
   handleDelete = (id) => {
     console.log(id);
-    let todos = [...this.state.todos].filter((item) => item.id !== id);
+    let todos = [...this.state.todos].filter((item) => item.id !=== id);
     this.setState({ todos });
   };
   checkAll = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 
 TodoForm.prototypes = {
     addTodo: PropTypes.func.isRequired,

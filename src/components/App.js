@@ -152,6 +152,20 @@ function App() {
     setTodos(todos.filter(item => item.id !== id));
   };
 
+  let todosFilter = (filter) => {
+    if (filter === 'all') {
+      return todos;
+    }
+    if (filter === 'active') {
+      return todos.filter(todo => !todo.isComplete );
+    }
+
+    if (filter === 'completed') {
+      return todos.filter(todo => todo.isComplete);
+    }
+
+  }
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
@@ -172,12 +186,10 @@ function App() {
             markAsEditing={markAsEditing}
             cancelEdit={cancelEdit}
             handleRemove={handleRemove}
-
+            todosFilter={todosFilter}
           ></TodoList>
         ) : (
-
               <NoTodos />
-
         )}
 
       </div>

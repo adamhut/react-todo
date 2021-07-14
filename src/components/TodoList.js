@@ -1,27 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
+import TodoItemRemaining from './TodoItemRemaining';
+import TodoClearCompleted from './TodoClearCompleted';
+import CompleteAllTodos from './CompleteAllTodos';
+import TodoFilters from './TodoFilters';
 
 TodoList.prototypes = {
     todos: PropTypes.object,
+    todoFilter:PropTypes.func,
     completeTodo: PropTypes.func,
     markAsEditing: PropTypes.func,
     updateTodo: PropTypes.func,
     cancelEdit: PropTypes.func,
-    handleRemove:PropTypes.func,
+    handleRemove: PropTypes.func,
+    clearComplete: PropTypes.func,
+    todosFilter:PropTypes.func,
 };
 
 function TodoList(props) {
 
-    let todosCount = () => {
-        return props.todos.filter((todo) => {
-            return todo.isComplete === false
-        }).length;
+    const [filter, setFilter] = useState('all');
+
+    let updateFilter = (filter) => {
+
+        setFilter(filter);
     }
+
     return (
         <>
             <ul className="todo-list">
                 {
-                    props.todos.map((todo, index) => {
+                    props.todosFilter(filter).map((todo, index) => {
                         return (
                             <li className="todo-item-container" key={index}>
                                 <div className="todo-item flex items-center cursor-pointer w-full">
@@ -52,7 +61,7 @@ function TodoList(props) {
                                                 onKeyDown={(event) => {
                                                     if (event.key === 'Enter') {
                                                         props.updateTodo(event, todo.id)
-                                                    } else if (event.key == 'Escape') {
+                                                    } else if (event.key === 'Escape') {
                                                         props.cancelEdit(todo.id)
                                                     }
                                                     // console
@@ -85,22 +94,24 @@ function TodoList(props) {
             </ul>
 
             <div className="check-all-container">
-                <div>
-                    <div className="button" onClick={props.checkAll}>Check All</div>
-                </div>
-                <span>{todosCount()} items remaining</span>
+
+                    <CompleteAllTodos checkAll={props.checkAll}/>
+                    {/* <div className="button" onClick={props.checkAll}>Check All</div> */}
+
+                <TodoItemRemaining todos={props.todos}/>
+                {/* <span>{todosCount()} items remaining</span> */}
+
             </div>
 
             <div className="other-buttons-container">
+                <TodoFilters
+                    updateFilter={updateFilter}
+                    filter={filter}
+                    setFilter={setFilter}
+                />
                 <div>
-                    <button className="button filter-button filter-button-active">
-                        All
-                    </button>
-                    <button className="button filter-button">Active</button>
-                    <button className="button filter-button">Completed</button>
-                </div>
-                <div>
-                    <button className="button" onClick={props.clearComplete}>Clear completed</button>
+                    <TodoClearCompleted clearComplete={props.clearComplete}/>
+                    {/* <button className="button" onClick={props.clearComplete}>Clear completed</button> */}
                 </div>
             </div>
         </>
