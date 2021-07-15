@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo }from 'react'
 import PropTypes from 'prop-types';
 
 TodoItemRemaining.prototypes = {
@@ -13,9 +13,10 @@ function TodoItemRemaining(props) {
             return todo.isComplete === false
         }).length;
     }
+    const remaining = useMemo(todosCount, [props.todos])
 
     return (
-        <span>{todosCount()} items remaining</span>
+        <span>{ remaining } items remaining</span>
     )
 }
 

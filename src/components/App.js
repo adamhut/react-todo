@@ -1,4 +1,4 @@
-import { useState, createRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import NoTodos from './NoTodos';
 import TodoForm from './TodoForm'
@@ -7,6 +7,9 @@ import '../reset.css';
 import '../App.css';
 
 function App() {
+
+  const [name, setName] = useState('');
+  const nameInputRef = useRef(null);
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -37,6 +40,13 @@ function App() {
     });
     setTodoId(currentMaxId);
     return;
+  }, []);
+
+  useEffect(() => {
+    nameInputRef.current.focus();
+    return function () {
+      // console.log('cleaning up , This is equal to "componentWillUnmount" ')
+    };
   }, []);
 
   const [todoInput, setTodoInput] = useState('');
@@ -169,6 +179,25 @@ function App() {
   return (
     <div className="todo-app-container">
       <div className="todo-app">
+        <div className="name-container">
+          <h2> What is your name</h2>
+          <button className="py-2 px-4 rounded-md t bg-blue-200 hover:bg-blue-300 shadow transition-colors duration-300"
+            onClick={() => nameInputRef.current.focus()
+              // console.log(nameInputRef.current.value); nameInputRef.focus();
+            }>Get Ref </button>
+          <form action="#">
+            <input type="text"
+              className="todo-input"
+              value={name}
+              ref={nameInputRef}
+              onChange={(e) => setName(e.target.value) }
+              placeholder="what is your name" />
+          </form>
+
+          {name && <p className="name-label mt-6">hello, {name} </p> }
+
+        </div>
+
         <h2>Todo App</h2>
         <TodoForm
           addTodo={addTodo}
