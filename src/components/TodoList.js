@@ -4,6 +4,7 @@ import TodoItemRemaining from './TodoItemRemaining';
 import TodoClearCompleted from './TodoClearCompleted';
 import CompleteAllTodos from './CompleteAllTodos';
 import TodoFilters from './TodoFilters';
+import useToggle from '../hooks/useToggle';
 
 TodoList.prototypes = {
     todos: PropTypes.object,
@@ -20,6 +21,8 @@ TodoList.prototypes = {
 function TodoList(props) {
 
     const [filter, setFilter] = useState('all');
+    const [isFeaturesOneVisible, setFeaturesOneVisible] = useToggle(true);
+    const [isFeaturesTwoVisible, setFeaturesTwoVisible] = useToggle(false);
 
     let updateFilter = (filter) => {
 
@@ -93,27 +96,39 @@ function TodoList(props) {
                 }
             </ul>
 
-            <div className="check-all-container">
+            <div className="toggles-container my-10 space-x-3">
+                <button className="button" onClick={setFeaturesOneVisible}>Features One Toggle</button>
 
+                <button className="button" onClick={setFeaturesTwoVisible}>Features Two Toggle</button>
+            </div>
+
+
+            {
+                isFeaturesOneVisible &&
+                <div className="check-all-container">
                     <CompleteAllTodos checkAll={props.checkAll}/>
                     {/* <div className="button" onClick={props.checkAll}>Check All</div> */}
-
-                <TodoItemRemaining todos={props.todos}/>
-                {/* <span>{todosCount()} items remaining</span> */}
-
-            </div>
-
-            <div className="other-buttons-container">
-                <TodoFilters
-                    updateFilter={updateFilter}
-                    filter={filter}
-                    setFilter={setFilter}
-                />
-                <div>
-                    <TodoClearCompleted clearComplete={props.clearComplete}/>
-                    {/* <button className="button" onClick={props.clearComplete}>Clear completed</button> */}
+                    <TodoItemRemaining todos={props.todos}/>
+                    {/* <span>{todosCount()} items remaining</span> */}
                 </div>
-            </div>
+            }
+
+            {
+                isFeaturesTwoVisible &&
+                <div className="other-buttons-container">
+                    <TodoFilters
+                        updateFilter={updateFilter}
+                        filter={filter}
+                        setFilter={setFilter}
+                    />
+                    <div>
+                        <TodoClearCompleted clearComplete={props.clearComplete} />
+                        {/* <button className="button" onClick={props.clearComplete}>Clear completed</button> */}
+                    </div>
+                </div>
+
+            }
+
         </>
     )
 }

@@ -5,45 +5,54 @@ import TodoForm from './TodoForm'
 import TodoList from './TodoList'
 import '../reset.css';
 import '../App.css';
+import useLocalStorage from './../hooks/useLocalStorage';
 
 function App() {
 
-  const [name, setName] = useState('');
-  const nameInputRef = useRef(null);
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: 'Finish React Series',
-      isComplete: true,
-      isEditing: false,
-    },
-    {
-      id: 2,
-      title: 'Go Grocery',
-      isComplete: false,
-      isEditing: false,
-    },
-    {
-      id: 3,
-      title: 'Take Over World',
-      isComplete: false,
-      isEditing: false,
-    }
-  ]);
+  // const [name, setName] = useState('');
+  const [name, setName] = useLocalStorage('name','');
 
-  const [todoId, setTodoId] = useState();
+  const [todos, setTodos] = useLocalStorage('todos', []);
+
+  const nameInputRef = useRef(null);
+  // const [todos, setTodos] = useState([
+  //   {
+  //     id: 1,
+  //     title: 'Finish React Series',
+  //     isComplete: true,
+  //     isEditing: false,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Go Grocery',
+  //     isComplete: false,
+  //     isEditing: false,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Take Over World',
+  //     isComplete: false,
+  //     isEditing: false,
+  //   }
+  // ]);
+
+  // const [todoId, setTodoId] = useState();\
+
+   const [todoId, setTodoId] = useLocalStorage('IdForTodos',1);
 
   useEffect(() => {
-    let currentMaxId = 0
-    todos.forEach((todo) => {
-      currentMaxId = currentMaxId < todo.id ? todo.id : currentMaxId;
-    });
-    setTodoId(currentMaxId);
-    return;
+    // let currentMaxId = 0
+    // todos.forEach((todo) => {
+    //   currentMaxId = currentMaxId < todo.id ? todo.id : currentMaxId;
+    // });
+    // setTodoId(currentMaxId);
+
   }, []);
 
   useEffect(() => {
     nameInputRef.current.focus();
+    // setName(JSON.parse(localStorage.getItem('name')) ?? '');
+
     return function () {
       // console.log('cleaning up , This is equal to "componentWillUnmount" ')
     };
@@ -176,21 +185,26 @@ function App() {
 
   }
 
+  let handleNameInput = (event) => {
+    setName(event.target.value);
+    // localStorage.setItem('name', JSON.stringify(event.target.value));
+  }
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
         <div className="name-container">
           <h2> What is your name</h2>
-          <button className="py-2 px-4 rounded-md t bg-blue-200 hover:bg-blue-300 shadow transition-colors duration-300"
+          {/* <button className="py-2 px-4 rounded-md t bg-blue-200 hover:bg-blue-300 shadow transition-colors duration-300"
             onClick={() => nameInputRef.current.focus()
               // console.log(nameInputRef.current.value); nameInputRef.focus();
-            }>Get Ref </button>
+            }>Get Ref </button> */}
           <form action="#">
             <input type="text"
               className="todo-input"
               value={name}
               ref={nameInputRef}
-              onChange={(e) => setName(e.target.value) }
+              onChange={handleNameInput}
               placeholder="what is your name" />
           </form>
 
