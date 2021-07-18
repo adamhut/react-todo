@@ -14,7 +14,10 @@ function App() {
 
   const [todos, setTodos] = useLocalStorage('todos', []);
 
+  const [todoId, setTodoId] = useLocalStorage('IdForTodos', 1);
+
   const nameInputRef = useRef(null);
+
   // const [todos, setTodos] = useState([
   //   {
   //     id: 1,
@@ -38,7 +41,7 @@ function App() {
 
   // const [todoId, setTodoId] = useState();\
 
-   const [todoId, setTodoId] = useLocalStorage('IdForTodos',1);
+
 
   useEffect(() => {
     // let currentMaxId = 0
@@ -153,17 +156,13 @@ function App() {
   };
 
   let addTodo = (todoInput) => {
-
-
     let todo = {
       id: todoId + 1,
       title: todoInput,
       isComplete: false,
     }
-
     setTodos([...todos, todo]);
     setTodoId(todoId + 1);
-
   };
 
   let handleRemove = (id) => {

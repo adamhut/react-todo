@@ -6,9 +6,6 @@ TodoForm.prototypes = {
 };
 
 function TodoForm(props) {
-
-
-
     const [todoInput, setTodoInput] = useState('');
 
     let handleInput = (event) => {

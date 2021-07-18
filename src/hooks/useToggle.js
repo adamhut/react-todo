@@ -6,6 +6,10 @@ const useToggle = (initialState=true) => {
     function toggle() {
 
         setVisible(previousVisable => !previousVisable);
+
+        // setVisible(!visible);
+        // let t = visible;
+        // setVisible(!t);
     }
 
     return [visible, toggle];
