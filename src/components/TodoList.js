@@ -5,6 +5,7 @@ import CompleteAllTodos from './CompleteAllTodos';
 import TodoFilters from './TodoFilters';
 import useToggle from '../hooks/useToggle';
 import { TodosContext } from '../context/TodosContext';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 function TodoList() {
@@ -12,7 +13,9 @@ function TodoList() {
     const {todos, setTodos,todosFilter, filter, setFilter} = useContext(TodosContext);
 
     const [isFeaturesOneVisible, setFeaturesOneVisible] = useToggle(true);
-    const [isFeaturesTwoVisible, setFeaturesTwoVisible] = useToggle(false);
+    const [isFeaturesTwoVisible, setFeaturesTwoVisible] = useToggle(true);
+
+    const divRef = React.createRef();
 
     let markAsEditing = (id) => {
         const updatedTodo = todos.map(todo => {
@@ -82,11 +85,20 @@ function TodoList() {
 
     return (
         <>
-            <ul className="todo-list">
+            <TransitionGroup
+                component="ul"
+                className="todo-list"
+
+            >
                 {
                     todosFilter(filter).map((todo, index) => {
                         return (
-                            <li className="todo-item-container" key={index}>
+                            <CSSTransition
+                                key={index}
+                                timeout={300}
+                                classNames="slide-horizontal"
+                            >
+                            <li className="todo-item-container" >
                                 <div className="todo-item flex items-center cursor-pointer w-full">
 
                                         <input
@@ -142,30 +154,42 @@ function TodoList() {
                                     </svg>
                                 </button>
                             </li>
+                            </CSSTransition>
                         )
                     })
                 }
-            </ul>
+           </TransitionGroup>
 
             <div className="toggles-container my-10 space-x-3">
-                <button className="button" onClick={setFeaturesOneVisible}>Features One Toggle</button>
+                <button className="button" onClick={setFeaturesOneVisible}>
+                    Features One Toggle
+                </button>
 
-                <button className="button" onClick={setFeaturesTwoVisible}>Features Two Toggle</button>
+                <button className="button" onClick={setFeaturesTwoVisible}>
+                    Features Two Toggle
+                </button>
             </div>
 
-
-            {
-                isFeaturesOneVisible &&
+            <CSSTransition
+                in={isFeaturesOneVisible}
+                timeout={300}
+                classNames="slide-vertical"
+                unmountOnExit
+            >
                 <div className="check-all-container">
-                    <CompleteAllTodos/>
+                    <CompleteAllTodos />
                     {/* <div className="button" onClick={props.checkAll}>Check All</div> */}
-                    <TodoItemRemaining/>
+                    <TodoItemRemaining />
                     {/* <span>{todosCount()} items remaining</span> */}
                 </div>
-            }
+            </CSSTransition>
 
-            {
-                isFeaturesTwoVisible &&
+            <CSSTransition
+                in={isFeaturesTwoVisible}
+                timeout={300}
+                classNames="slide-vertical"
+                unmountOnExit
+            >
                 <div className="other-buttons-container">
                     <TodoFilters />
                     <div>
@@ -173,8 +197,8 @@ function TodoList() {
                         {/* <button className="button" onClick={props.clearComplete}>Clear completed</button> */}
                     </div>
                 </div>
+            </CSSTransition>
 
-            }
 
         </>
     )

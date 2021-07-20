@@ -139,3 +139,24 @@ h2 {
 .name-container{
   @apply mb-6;
 }
+
+.slide-vertical{
+  @apply flex items-center justify-between;
+}
+.slide-vertical-enter{
+  @apply opacity-0;
+
+}
+
+.slide-vertical-enter-active{
+  @apply opacity-100 transition-all duration-300;
+}
+
+
+.slide-vertical-exit{
+  @apply opacity-0;
+}
+
+.slide-vertical-exit-active{
+  @apply opacity-100  transition-all duration-300;
+}

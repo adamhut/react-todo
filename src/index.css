@@ -1,4 +1,47 @@
 /* ./src/index.css */
 @tailwind base;
+
 @tailwind components;
+
+.check-all-container{
+  @apply flex items-center justify-between pt-4 mt-6 border-t border-gray-300 ;
+  color: #6B7280;
+
+}
+
+.slide-vertical-enter {
+  @apply opacity-0 transform -translate-y-5;
+
+}
+
+.slide-vertical-enter-active{
+  @apply opacity-100 transition-all duration-300 ease-in transform translate-y-0;
+}
+
+
+.slide-vertical-exit{
+  @apply opacity-0 transform translate-y-0;
+}
+
+.slide-vertical-exit-active{
+  @apply opacity-100  transition-all duration-200 ease-in  transform -translate-y-5;
+}
+
+.slide-horizontal-enter {
+  @apply opacity-0 transform -translate-x-5;
+}
+
+.slide-horizontal-enter-active{
+  @apply opacity-100 transition-all duration-300 ease-in transform translate-x-0;
+}
+
+
+.slide-horizontal-exit{
+  @apply opacity-0 transform translate-x-0;
+}
+
+.slide-horizontal-exit-active{
+  @apply opacity-100  transition-opacity duration-200 ease-in  transform translate-x-5;
+}
+
 @tailwind utilities;
