@@ -6,10 +6,14 @@ import TodoList from './TodoList'
 import '../reset.css';
 import '../App.css';
 import useLocalStorage from './../hooks/useLocalStorage';
+import { TodosContext } from '../context/TodosContext';
 
 function App() {
 
   // const [name, setName] = useState('');
+
+  const [filter, setFilter] = useState('all');
+
   const [name, setName] = useLocalStorage('name','');
 
   const [todos, setTodos] = useLocalStorage('todos', []);
@@ -68,55 +72,9 @@ function App() {
   }
 
 
-  let checkAll = (event) => {
-    let temp = [...todos].map(todo => {
-      todo.isComplete = true;
-      return todo;
-    });
-    setTodos(temp);
-  };
 
-  let clearComplete = (event) => {
-    let temp = [...todos].filter(todo => {
-      return todo.isComplete === false;
-    });
-    setTodos(temp);
-  };
 
-  let completeTodo = (id) => {
-    const updatedTodo = todos.map(todo => {
-      //  console.log(event.target);
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
-    });
-    setTodos(updatedTodo);
-  };
 
-  let updateTodo = (event,id) => {
-    console.log(event.target.value, id);
-
-    const updatedTodo = todos.map(todo => {
-
-      if (todo.id === id) {
-        if (event.target.value.trim().length === 0) {
-          todo.isEditing = false;
-          return todo;
-        }
-        todo.title = event.target.value;
-        todo.isEditing = false;
-      }
-      return todo;
-    });
-    setTodos(updatedTodo);
-  }
-
-  let handleKeyPress = (event, todoId) => {
-    if (event.key === 'Enter') {
-      updateTodo(event, todoId);
-    }
-  }
 
   let changeState = (event) => {
     let temp = [...todos];
@@ -131,54 +89,14 @@ function App() {
     setTodos(temp);
   };
 
-  let markAsEditing = (id) => {
-    const updatedTodo = todos.map(todo => {
 
-      if (todo.id === id) {
-        todo.isEditing = true;
-      } else {
-        todo.isEditing = false;
-      }
-      return todo;
-    });
-    setTodos(updatedTodo);
-  };
-
-  let cancelEdit = (id) => {
-    const updatedTodo = todos.map(todo => {
-
-      if (todo.id === id) {
-        todo.isEditing = false;
-      }
-      return todo;
-    });
-    setTodos(updatedTodo);
-  };
-
-  let addTodo = (todoInput) => {
-    let todo = {
-      id: todoId + 1,
-      title: todoInput,
-      isComplete: false,
-    }
-    setTodos([...todos, todo]);
-    setTodoId(todoId + 1);
-  };
-
-  let handleRemove = (id) => {
-    // let newTodo =todos.filter(item => item.id !== id);
-    setTodos(todos.filter(item => item.id !== id));
-  };
 
   let todosFilter = (filter) => {
     if (filter === 'all') {
       return todos;
-    }
-    if (filter === 'active') {
+    }else if (filter === 'active') {
       return todos.filter(todo => !todo.isComplete );
-    }
-
-    if (filter === 'completed') {
+    }else if (filter === 'completed') {
       return todos.filter(todo => todo.isComplete);
     }
 
@@ -190,6 +108,15 @@ function App() {
   }
 
   return (
+    <TodosContext.Provider value={{
+      todos,
+      setTodos,
+      todoId,
+      setTodoId,
+      todosFilter,
+      filter,
+      setFilter
+    }}>
     <div className="todo-app-container">
       <div className="todo-app">
         <div className="name-container">
@@ -212,30 +139,17 @@ function App() {
         </div>
 
         <h2>Todo App</h2>
-        <TodoForm
-          addTodo={addTodo}
-
-        ></TodoForm>
+        <TodoForm></TodoForm>
         {todos.length > 0 ? (
           <TodoList
-            todos={todos}
-            completeTodo={completeTodo}
-            checkAll={checkAll}
-            clearComplete={clearComplete}
-            updateTodo={updateTodo}
-            handleKeyPress={handleKeyPress}
-            changeState={changeState}
-            markAsEditing={markAsEditing}
-            cancelEdit={cancelEdit}
-            handleRemove={handleRemove}
-            todosFilter={todosFilter}
           ></TodoList>
         ) : (
               <NoTodos />
         )}
 
       </div>
-    </div>
+      </div>
+    </TodosContext.Provider>
   );
 }
 
