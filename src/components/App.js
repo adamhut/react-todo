@@ -72,11 +72,6 @@ function App() {
     setTodoInput(event.target.value);
   }
 
-
-
-
-
-
   let changeState = (event) => {
     let temp = [...todos];
     temp = temp.map(todo => {
@@ -118,50 +113,49 @@ function App() {
       filter,
       setFilter
     }}>
-    <div className="todo-app-container">
-      <div className="todo-app">
-        <div className="name-container">
-          <h2> What is your name</h2>
-          {/* <button className="py-2 px-4 rounded-md t bg-blue-200 hover:bg-blue-300 shadow transition-colors duration-300"
-            onClick={() => nameInputRef.current.focus()
-              // console.log(nameInputRef.current.value); nameInputRef.focus();
-            }>Get Ref </button> */}
-          <form action="#">
-            <input type="text"
-              className="todo-input"
-              value={name}
-              ref={nameInputRef}
-              onChange={handleNameInput}
-              placeholder="what is your name" />
-          </form>
-          <CSSTransition
-              in={name.length > 0}
-              timeout={300}
-              classNames="slide-vertical"
-              unmountOnExit
-          >
-              <p className="name-label mt-6">hello, {name} </p>
-          </CSSTransition>
+        <div className="todo-app">
+          <div className="name-container">
+            <h2> What is your name</h2>
+            {/* <button className="py-2 px-4 rounded-md t bg-blue-200 hover:bg-blue-300 shadow transition-colors duration-300"
+              onClick={() => nameInputRef.current.focus()
+                // console.log(nameInputRef.current.value); nameInputRef.focus();
+              }>Get Ref </button> */}
+            <form action="#">
+              <input type="text"
+                className="todo-input"
+                value={name}
+                ref={nameInputRef}
+                onChange={handleNameInput}
+                placeholder="what is your name" />
+            </form>
+            <CSSTransition
+                in={name.length > 0}
+                timeout={300}
+                classNames="slide-vertical"
+                unmountOnExit
+            >
+                <p className="name-label mt-6">hello, {name} </p>
+            </CSSTransition>
+          </div>
+
+          <h2>Todo App</h2>
+          <TodoForm></TodoForm>
+
+            <SwitchTransition mode="out-in">
+              <CSSTransition
+                key={todos.length >0 }
+                timeout={300}
+                classNames="slide-vertical"
+                unmountOnExit
+              >
+                {todos.length > 0 ? <TodoList /> : <NoTodos />}
+                </CSSTransition>
+            </SwitchTransition>
+
+
+
         </div>
 
-        <h2>Todo App</h2>
-        <TodoForm></TodoForm>
-
-          <SwitchTransition mode="out-in">
-            <CSSTransition
-              key={todos.length >0 }
-              timeout={300}
-              classNames="slide-vertical"
-              unmountOnExit
-            >
-              {todos.length > 0 ? <TodoList /> : <NoTodos />}
-              </CSSTransition>
-          </SwitchTransition>
-
-
-
-      </div>
-      </div>
     </TodosContext.Provider>
   );
 }
