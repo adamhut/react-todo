@@ -1,17 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Root from './components/Root';
+// import Root from './components/Root';
 import FetchingData from './components/FetchingData';
+// import App from './components/App';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+
+import { ReactQueryDevtools } from 'react-query/devtools'
 // import AppClass from './components/AppClass';
 // import reportWebVitals from './reportWebVitals';
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
-    <FetchingData />
+    {/* <FetchingData /> */}
     {/* <Root/> */}
     {/* <AppClass /> */}
+
+    {/* <App /> */}
+    <QueryClientProvider client={queryClient}>
+      <FetchingData />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

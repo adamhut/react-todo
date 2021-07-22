@@ -1,4 +1,5 @@
 import React from 'react'
+import { useQuery } from 'react-query';
 import useFetch from '../../hooks/useFetch'
 
 export default function Reddit() {
