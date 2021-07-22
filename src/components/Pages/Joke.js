@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react'
+import useFetch from '../../hooks/useFetch';
 
 export default function Joke() {
 
-    const [joke, setJoke] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const {
+        data: joke,
+        isLoading,
+        errorMessage
+    } = useFetch('https://official-joke-api.appspot.com/jokes/random');
 
-    const [errorMessage, setErrorMessage] = useState(null);
+    // const [joke, setJoke] = useState(null);
+    // const [isLoading, setIsLoading] = useState(true);
+    // const [errorMessage, setErrorMessage] = useState(null);
+    // useEffect(() => {
+    //     fetch('https://official-joke-api.appspot.com/jokes/random')
+    //         .then(response => response.json())
+    //         .then(result => {
+    //             setJoke(result.setup + ' ' + result.punchline );
+    //             setIsLoading(false);
+    //         })
+    //         .catch(error => {
+    //             setIsLoading(false);
+    //             setErrorMessage('There is an Error!!!');
+    //         })
+    // }, [])
 
-    useEffect(() => {
-
-        fetch('https://official-joke-api.appspot.com/jokes/random')
-            .then(response => response.json())
-            .then(result => {
-                setJoke(result.setup + ' ' + result.punchline );
-                setIsLoading(false);
-            })
-            .catch(error => {
-                setIsLoading(false);
-                setErrorMessage('There is an Error!!!');
-            })
-
-    }, [])
     return (
         <div>
             <h2>Joke Api</h2>
@@ -54,13 +58,9 @@ export default function Joke() {
             {
                 !isLoading && joke && (
                     <ul className="space-y-2">
-
                         <li className="flex items-center">
-                            <span>{ joke }</span>
+                            <span>{joke.setup + ' ' + joke.punchline  }</span>
                         </li>
-
-
-
                     </ul>
                 )
             }

@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import useFetch from '../../hooks/useFetch'
 
 export default function Reddit() {
 
-    const [posts, setPosts] = useState();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [errorMessage, setErrorMessage] = useState(null);
-
-    useEffect(() => {
-
-        fetch('https://www.reddit.com/r/aww.json')
-            .then(response => response.json())
-            .then(result => {
-                setPosts(result.data.children);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                setIsLoading(false);
-                setErrorMessage('There is an Error!!!');
-            })
-
-    }, [])
+    const {
+        data: posts,
+        isLoading,
+        errorMessage
+    } = useFetch('https://www.reddit.com/r/aww.json');
 
 
 
@@ -58,7 +45,7 @@ export default function Reddit() {
                 !isLoading && posts && (
                     <ul className="space-y-2">
                         {
-                            posts.map((post,idx) => {
+                            posts.data.children.map((post,idx) => {
                                 return (
                                     <li key={post.data.id} className="flex items-center">
                                         <img src={post.data.thumbnail} alt="" className="w-8 h-8 rounded-full object-cover" />
