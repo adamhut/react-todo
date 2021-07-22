@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useQuery } from 'react-query';
 import useFetch from '../../hooks/useFetch';
 
 export default function Joke() {
@@ -6,8 +7,27 @@ export default function Joke() {
     const {
         data: joke,
         isLoading,
-        errorMessage
-    } = useFetch('https://official-joke-api.appspot.com/jokes/random');
+        isError,
+        error,
+        isSuccess
+    } = useQuery('joke', fetchPosts, {
+        // staleTime: 5000, //5 seconds,
+        // refetchOnWindowFocus:false, //default true,
+        // retry:false,
+    });
+
+    function fetchPosts() {
+        return fetch('https://official-joke-api.appspot.com/jokes/random')
+            .then(response =>
+                response.json()
+            );
+    }
+
+    // const {
+    //     data: joke,
+    //     isLoading,
+    //     errorMessage
+    // } = useFetch('https://official-joke-api.appspot.com/jokes/random');
 
     // const [joke, setJoke] = useState(null);
     // const [isLoading, setIsLoading] = useState(true);
@@ -47,14 +67,14 @@ export default function Joke() {
             }
 
             {
-                errorMessage && (
+                isError && (
                     <div className="text-red-500 font-bold">
-                        {errorMessage}
+                        {error.message}
                     </div>
                 )
             }
             {
-                !isLoading && joke && (
+                isSuccess && (
                     <ul className="space-y-2">
                         <li className="flex items-center">
                             <span>{joke.setup + ' ' + joke.punchline  }</span>

@@ -4,13 +4,26 @@ import useFetch from '../../hooks/useFetch'
 
 export default function Reddit() {
 
+    // const {
+    //     data: posts,
+    //     isLoading,
+    //     errorMessage
+    // } = useFetch('https://www.reddit.com/r/aww.json');
+
     const {
         data: posts,
         isLoading,
-        errorMessage
-    } = useFetch('https://www.reddit.com/r/aww.json');
+        isError,
+        error,
+        isSuccess
+    } = useQuery('posts', fetchPosts);
 
-
+    function fetchPosts() {
+        return fetch('https://www.reddit.com/r/aww.json')
+            .then(response =>
+                response.json()
+            );
+    }
 
     return (
         <div>
@@ -34,16 +47,16 @@ export default function Reddit() {
             }
 
             {
-                errorMessage && (
+                isError && (
                     <div className="text-red-500 font-bold">
-                       { errorMessage }
+                       { error.message }
                     </div>
                 )
             }
 
 
             {
-                !isLoading && posts && (
+                isSuccess && (
                     <ul className="space-y-2">
                         {
                             posts.data.children.map((post,idx) => {
