@@ -53,8 +53,6 @@ export default function Joke() {
                     </div>
                 )
             }
-
-
             {
                 !isLoading && joke && (
                     <ul className="space-y-2">
