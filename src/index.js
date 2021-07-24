@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import Root from './components/Root';
 import FetchingData from './components/FetchingData';
-// import App from './components/App';
+import App from './components/App';
 
 import {
   QueryClient,
@@ -22,11 +22,11 @@ ReactDOM.render(
     {/* <Root/> */}
     {/* <AppClass /> */}
 
-    {/* <App /> */}
-    <QueryClientProvider client={queryClient}>
+    <App />
+    {/* <QueryClientProvider client={queryClient}>
       <FetchingData />
       <ReactQueryDevtools />
-    </QueryClientProvider>
+    </QueryClientProvider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
