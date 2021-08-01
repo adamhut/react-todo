@@ -23,6 +23,25 @@ export default function Joke() {
             );
     }
 
+    const {
+        data: drinks,
+        isLoading:isDrinkLoading,
+        isError: isDrinkError,
+        error:drinkError,
+        isSuccess:isDrinkSuccess
+    } = useQuery('drinks', fetchDrinks, {
+        // staleTime: 5000, //5 seconds,
+        // refetchOnWindowFocus:false, //default true,
+        // retry:false,
+    });
+
+    function fetchDrinks() {
+        return fetch('http://lara-coffee.test/api/drinks')
+            .then(response =>
+                response.json()
+            );
+    }
+
     // const {
     //     data: joke,
     //     isLoading,
@@ -82,7 +101,52 @@ export default function Joke() {
                     </ul>
                 )
             }
+            <div className="DrinksContainer">
+                <h2>Drinks Api</h2>
 
+                {
+                    isDrinkLoading && (
+                        <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                            <div className="animate-pulse flex space-x-4">
+                                <div className="rounded-full bg-blue-400 h-12 w-12"></div>
+                                <div className="flex-1 space-y-4 py-1">
+                                    <div className="h-4 bg-blue-400 rounded w-3/4"></div>
+                                    <div className="space-y-2">
+                                        <div className="h-4 bg-blue-400 rounded"></div>
+                                        <div className="h-4 bg-blue-400 rounded w-5/6"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+
+                {
+                    isDrinkError && (
+                        <div className="text-red-500 font-bold">
+                            {drinkError.message}
+                        </div>
+                    )
+                }
+                {
+                    isDrinkSuccess && (
+                        <ul className="space-y-2">
+                            {
+                                drinks.data && drinks.data.map((drink) => {
+                                    return (
+                                        <li key={drink.id} className="flex items-center">
+                                           {drink.name}-- {drink.caffeine}
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    )
+                }
+
+
+
+            </div>
         </div>
     )
 }

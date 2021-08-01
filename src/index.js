@@ -22,11 +22,11 @@ ReactDOM.render(
     {/* <Root/> */}
     {/* <AppClass /> */}
 
-    <App />
-    {/* <QueryClientProvider client={queryClient}>
+    {/* <App /> */}
+    <QueryClientProvider client={queryClient}>
       <FetchingData />
       <ReactQueryDevtools />
-    </QueryClientProvider> */}
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
