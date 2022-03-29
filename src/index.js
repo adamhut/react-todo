@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import Root from './components/Root';
+import Root from './components/Root';
 import FetchingData from './components/FetchingData';
 import App from './components/App';
 
@@ -19,14 +19,14 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     {/* <FetchingData /> */}
-    {/* <Root/> */}
+    <Root/>
     {/* <AppClass /> */}
 
     {/* <App /> */}
-    <QueryClientProvider client={queryClient}>
+    {/* <QueryClientProvider client={queryClient}>
       <FetchingData />
       <ReactQueryDevtools />
-    </QueryClientProvider>
+    </QueryClientProvider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
