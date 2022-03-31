@@ -25,10 +25,10 @@ export default function Joke() {
 
     const {
         data: drinks,
-        isLoading:isDrinkLoading,
+        isLoading: isDrinkLoading,
         isError: isDrinkError,
-        error:drinkError,
-        isSuccess:isDrinkSuccess
+        error: drinkError,
+        isSuccess: isDrinkSuccess
     } = useQuery('drinks', fetchDrinks, {
         // staleTime: 5000, //5 seconds,
         // refetchOnWindowFocus:false, //default true,
@@ -96,7 +96,7 @@ export default function Joke() {
                 isSuccess && (
                     <ul className="space-y-2">
                         <li className="flex items-center">
-                            <span>{joke.setup + ' ' + joke.punchline  }</span>
+                            <span>{joke.setup + ' ' + joke.punchline}</span>
                         </li>
                     </ul>
                 )
@@ -135,7 +135,7 @@ export default function Joke() {
                                 drinks.data && drinks.data.map((drink) => {
                                     return (
                                         <li key={drink.id} className="flex items-center">
-                                           {drink.name}-- {drink.caffeine}
+                                            {drink.name}-- {drink.caffeine}
                                         </li>
                                     )
                                 })

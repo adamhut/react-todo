@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Blog from './Pages/Blog';
 import BlogPost from './Pages/BlogPost';
 import NoMatch from './Pages/NoMatch';
+import Memoization from './Pages/Memoization';
 
 
 
@@ -24,7 +25,7 @@ export default function Root() {
     return (
         <Router>
             <div className="todo-app-container">
-                <NavigationBar/>
+                <NavigationBar />
                 <div className="content">
                     <Switch>
                         <Route exact path="/">
@@ -38,6 +39,10 @@ export default function Root() {
                         </Route>
                         <Route exact path="/blog">
                             <Blog />
+                        </Route>
+
+                        <Route exact path="/memoization">
+                            <Memoization />
                         </Route>
                         <Route path="/blog/:id">
                             <BlogPost />

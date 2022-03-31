@@ -25,6 +25,12 @@ export default function NavigationBar() {
                     </NavLink>
                 </li>
 
+                <li>
+                    <NavLink to="/memoization" activeClassName="text-blue-600 font-bold">
+                        Memoization
+                    </NavLink>
+                </li>
+
             </ul>
         </nav>
     )
