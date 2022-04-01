@@ -32,7 +32,7 @@ export default function Root() {
                             <App />
                         </Route>
                         <Route path="/about">
-                            <About />
+                            <About title="hello About" />
                         </Route>
                         <Route path="/contact">
                             <Contact />

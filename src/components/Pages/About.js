@@ -18,15 +18,14 @@ function reducer(state, action) {
 }
 
 
-export default function About() {
+export default function About({ title }) {
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
-
     return (
         <div className="container mx-auto text-center mt-16">
-            This is the about page
-            <div>Count :{state.count}</div>
+            <h1 id="title">This is the about page {title}</h1>
+            <div id="count">Count :{state.count}</div>
             <div className="mt-4">
                 <button className="px-2 py-1 border border-gray-700 rounded mx-2" onClick={() => dispatch({ type: 'increment' })}>increase</button>
                 <button className="px-2 py-1 border border-gray-700 rounded mx-2" onClick={() => dispatch({ type: 'decrement' })}>decrease</button>
