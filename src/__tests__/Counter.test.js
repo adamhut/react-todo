@@ -5,6 +5,15 @@ import App from '../components/App';
 import About from '../components/Pages/About';
 
 
+
+test('renders About', () => {
+  render(<About />);
+  // screen.debug();
+  const linkElement = screen.getByText(/This is the about page/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
 it('renders About Counter Component', () => {
 
   render(<About title="This is Counter" />);
